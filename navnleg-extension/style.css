@@ -1,0 +1,186 @@
+/* Navneleg – alle klasser har præfikset nl- for ikke at kollidere med Lectio */
+
+html.nl-noscroll { overflow: hidden; }
+
+.nl-launch {
+  display: inline-block;
+  margin: 8px 0 12px;
+  padding: 8px 16px;
+  font: 600 14px/1.2 system-ui, sans-serif;
+  color: #fff;
+  background: #2f6fb3;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,.2);
+}
+.nl-launch:hover { background: #255a93; }
+.nl-launch:disabled { background: #999; cursor: not-allowed; }
+
+.nl-overlay {
+  position: fixed; inset: 0; z-index: 2147483000;
+  background: rgba(15, 23, 35, .82);
+  display: flex; align-items: center; justify-content: center;
+  font: 16px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: #1c2430;
+}
+.nl-overlay * { box-sizing: border-box; }
+
+.nl-panel {
+  width: min(760px, 96vw); max-height: 96vh; overflow: auto;
+  background: #fff; border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.4);
+  display: flex; flex-direction: column;
+}
+
+.nl-header {
+  position: relative;
+  padding: 14px 52px 10px 18px;
+  border-bottom: 1px solid #e5e8ec;
+  display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center;
+}
+.nl-title { font-weight: 700; font-size: 17px; }
+.nl-modes { display: flex; flex-wrap: wrap; gap: 4px; }
+.nl-mode {
+  padding: 5px 10px; font: inherit; font-size: 13px;
+  border: 1px solid #cfd6de; background: #f5f7f9; border-radius: 999px; cursor: pointer;
+}
+.nl-mode:hover { background: #e8edf2; }
+.nl-mode.nl-active { background: #2f6fb3; border-color: #2f6fb3; color: #fff; }
+.nl-stats { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #556; width: 100%; }
+.nl-bar { flex: 1; height: 6px; background: #e5e8ec; border-radius: 3px; overflow: hidden; }
+.nl-bar-fill { height: 100%; background: #3a9d5d; transition: width .3s; }
+.nl-streak { font-weight: 700; color: #c75a00; }
+.nl-close {
+  position: absolute; top: 10px; right: 12px;
+  width: 32px; height: 32px; border: 0; border-radius: 50%;
+  background: transparent; font-size: 18px; cursor: pointer; color: #556;
+}
+.nl-close:hover { background: #eef1f4; }
+
+.nl-body { padding: 18px; }
+.nl-hint { padding: 0 18px 14px; font-size: 12px; color: #889; text-align: center; }
+
+.nl-card { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.nl-photo {
+  height: min(46vh, 380px); max-width: 100%;
+  object-fit: contain; border-radius: 10px; background: #eef1f4;
+  cursor: pointer;
+  image-rendering: auto;
+}
+.nl-name { font-size: 26px; font-weight: 700; text-align: center; }
+.nl-hidden { visibility: hidden; }
+
+.nl-buttons, .nl-result { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; align-items: center; min-height: 40px; }
+.nl-btn {
+  padding: 9px 18px; font: inherit; font-weight: 600;
+  border: 1px solid #cfd6de; border-radius: 8px; background: #f5f7f9; cursor: pointer;
+}
+.nl-btn:hover { background: #e8edf2; }
+.nl-btn-ok { background: #3a9d5d !important; border-color: #3a9d5d !important; color: #fff; }
+.nl-btn-bad { background: #c9483b !important; border-color: #c9483b !important; color: #fff; }
+.nl-btn-ghost { background: transparent; }
+
+.nl-options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: min(560px, 100%); }
+.nl-opt { text-align: left; }
+
+.nl-form { display: flex; gap: 8px; width: min(480px, 100%); }
+.nl-input {
+  flex: 1; padding: 10px 12px; font: inherit; font-size: 18px;
+  border: 2px solid #cfd6de; border-radius: 8px; outline: none;
+}
+.nl-input:focus { border-color: #2f6fb3; }
+
+.nl-feedback { font-weight: 700; font-size: 18px; }
+.nl-feedback small { font-weight: 400; color: #556; }
+.nl-ok { color: #2e8a4f; }
+.nl-bad { color: #b33a2e; }
+
+.nl-tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; width: 100%; }
+@media (max-width: 600px) { .nl-options { grid-template-columns: 1fr 1fr; } }
+.nl-tile {
+  position: relative; padding: 0; border: 3px solid transparent; border-radius: 10px;
+  background: #eef1f4; cursor: pointer; overflow: hidden; aspect-ratio: 3 / 4;
+}
+.nl-tile:hover { border-color: #9bb8d8; }
+.nl-tile-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.nl-tile-num {
+  position: absolute; top: 6px; left: 6px; width: 24px; height: 24px; border-radius: 50%;
+  background: rgba(0,0,0,.6); color: #fff; font-size: 13px; line-height: 24px; text-align: center;
+}
+.nl-tile-name {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 4px;
+  background: rgba(0,0,0,.65); color: #fff; font-size: 12px; text-align: center;
+}
+.nl-tile-ok { border-color: #3a9d5d; }
+.nl-tile-bad { border-color: #c9483b; }
+
+.nl-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; }
+.nl-fig { margin: 0; text-align: center; font-size: 13px; }
+.nl-fig-img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 8px; background: #eef1f4; }
+.nl-fig figcaption { margin-top: 4px; }
+.nl-dots { display: block; color: #3a9d5d; letter-spacing: 2px; font-size: 11px; }
+.nl-reset { margin-top: 18px; text-align: center; }
+
+/* A–Å-gennemgang */
+.nl-listnav { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 8px; }
+.nl-listnav .nl-btn { padding: 6px 12px; font-size: 14px; }
+.nl-btn:disabled { opacity: .4; cursor: default; }
+.nl-count { font-weight: 700; color: #445; }
+.nl-listbar { width: 100%; flex: none; }
+.nl-toggle { font-size: 13px; color: #556; cursor: pointer; user-select: none; }
+.nl-done { gap: 10px; padding: 30px 0; text-align: center; }
+.nl-missed { color: #b33a2e; max-width: 560px; }
+
+/* To-lags fremskridtsbjælke: lys = på vej, mørk = lært */
+.nl-stats .nl-bar { position: relative; }
+.nl-stats .nl-bar .nl-bar-fill { position: absolute; left: 0; top: 0; }
+.nl-bar-way { background: #a8d8b8 !important; }
+
+/* Hjælp og tilbagemelding */
+.nl-header { padding-right: 90px; }
+.nl-help-btn {
+  position: absolute; top: 10px; right: 48px;
+  width: 32px; height: 32px; border: 1px solid #cfd6de; border-radius: 50%;
+  background: #f5f7f9; font: 700 15px/1 system-ui, sans-serif; color: #2f6fb3; cursor: pointer;
+}
+.nl-help-btn:hover { background: #e8edf2; }
+
+.nl-toast {
+  margin: -6px auto 12px; padding: 6px 14px; width: fit-content; max-width: 100%;
+  border-radius: 999px; font-size: 14px; font-weight: 600;
+  background: #eef7f1; animation: nl-fade 2.2s ease forwards;
+}
+.nl-toast.nl-bad { background: #fbeeec; }
+@keyframes nl-fade { 0%, 70% { opacity: 1; } 100% { opacity: .55; } }
+.nl-toast .nl-dots, .nl-feedback-sub .nl-dots, .nl-help .nl-dots { display: inline; font-size: 12px; }
+.nl-feedback-sub { font-size: 13px; font-weight: 400; color: #556; margin-top: 2px; }
+.nl-dots-done { color: #1f7a42; font-weight: 700; }
+
+.nl-help { max-width: 600px; margin: 0 auto; font-size: 15px; text-align: left; }
+.nl-help .nl-buttons { justify-content: center; }
+.nl-help h2 { font-size: 20px; margin: 0 0 8px; }
+.nl-help h3 { font-size: 15px; margin: 16px 0 4px; color: #2f6fb3; }
+.nl-help p { margin: 4px 0; }
+.nl-help ul { margin: 4px 0; padding-left: 20px; }
+.nl-help li { margin: 3px 0; }
+.nl-help-dots { list-style: none; padding-left: 4px !important; }
+.nl-help-small { font-size: 12px; color: #778; margin-top: 12px !important; }
+.nl-help .nl-buttons { margin-top: 14px; }
+
+/* Beskyt mod Lectios egne overskrift-/knapstile */
+.nl-overlay h2, .nl-overlay h3, .nl-overlay button, .nl-overlay input { font-family: inherit; }
+.nl-form .nl-btn { white-space: nowrap; }
+.nl-input { min-width: 0; }
+
+/* Mobil / lav skærm: mindre billede, så knapperne altid kan ses */
+@media (max-width: 600px), (max-height: 700px) {
+  .nl-photo { height: min(34vh, 300px); }
+  .nl-body { padding: 12px; }
+  .nl-card { gap: 10px; }
+  .nl-name { font-size: 22px; }
+  .nl-tiles { gap: 6px; }
+  .nl-tile-num { width: 20px; height: 20px; line-height: 20px; font-size: 11px; top: 4px; left: 4px; }
+  .nl-tile-name { font-size: 10px; }
+  .nl-gallery { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 8px; }
+}

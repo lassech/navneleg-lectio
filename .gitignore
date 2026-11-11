@@ -1,0 +1,22 @@
+# Hvidliste: kun disse filer/mapper i roden kan komme med i repoet.
+# Alt andet (fx gemte Lectio-sider med rigtige elevdata, private mapper) ignoreres.
+/*
+!/.gitignore
+!/README.md
+!/build.sh
+!/docs/
+!/navnleg-extension/
+!/test/
+
+# Gemte Lectio-sider indeholder rigtige elevdata – må ALDRIG committes
+*Lectio*.html
+*Lectio*_files/
+*.aspx
+
+# Test-artefakter
+test/fix/
+test/shots/
+test/ff-profile-*/
+test/*.log
+test/*.out
+test/*.pem
