@@ -61,8 +61,6 @@ Udvidelsen er bygget, så den **ikke gemmer og ikke sender noget om eleverne**.
   ingen statistik eller sporing.
 - Den kører kun på Lectios side "Lærere og elever" (`…/subnav/members.aspx`).
 
-Følg din skoles regler for brug af elevdata. Er du i tvivl, så spørg skolens
-databeskyttelsesrådgiver (DPO).
 
 ---
 
