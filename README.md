@@ -74,7 +74,7 @@ selv. Det tager et par minutter.
 Gå til **[Releases](../../releases/latest)** og hent den fil, der passer til din browser:
 
 - **`navnleg-chrome.zip`** til Chrome, Edge, Brave, Vivaldi og Opera
-- **`navnleg-firefox.zip`** til Firefox
+- **`navnleg-firefox.xpi`** til Firefox
 
 Du kan også hente hele repoet via den grønne knap **Code → Download ZIP**. Udvidelsen ligger så
 i mappen `navnleg-extension`.
@@ -106,16 +106,14 @@ i mappen `navnleg-extension`.
 
 ### Firefox
 
-Firefox kræver, at udvidelser er **signeret af Mozilla**, før de kan installeres permanent.
+`navnleg-firefox.xpi` er signeret af Mozilla og installeres permanent som en almindelig tilføjelse.
 
-**Hvis der ligger en `.xpi`-fil under [Releases](../../releases/latest):**
-Hent den og åbn den i Firefox, eller træk den ind i et Firefox-vindue. Klik **Tilføj**, så er du færdig.
-
-**Ellers kan du afprøve den midlertidigt.** Den forsvinder igen, når Firefox lukkes:
-
-1. Pak `navnleg-firefox.zip` ud.
-2. Åbn `about:debugging#/runtime/this-firefox`.
-3. Klik **Indlæs midlertidig tilføjelse…** og vælg filen `manifest.json` i den udpakkede mappe.
+1. Hent **`navnleg-firefox.xpi`** fra [Releases](../../releases/latest) **med Firefox**. Firefox
+   spørger så selv, om du vil installere den. Har du hentet filen på anden vis, kan du trække den
+   ind i et Firefox-vindue eller åbne `about:addons`, klikke på tandhjulet ⚙ og vælge
+   **Installer tilføjelse fra fil…**.
+2. Klik **Tilføj**, når Firefox spørger.
+3. Udvidelsen **Navneleg for Lectio** står nu under `about:addons`.
 
 **Første gang i Firefox:** Hvis knappen ikke vises på Lectio, skal du give udvidelsen adgang
 til siden. Klik på **puslespilsikonet** i værktøjslinjen, find *Navneleg for Lectio* og vælg
@@ -164,7 +162,7 @@ Udvidelsen virker også på tablet og mobil, hvis browseren understøtter udvide
 | Knappen er grå | Der skal være mindst 2 elever med foto på holdet. |
 | Billederne er små eller slørede | Det store billede kunne ikke hentes, så det lille bruges i stedet. Det kan ske, hvis Lectio ændrer noget. |
 | Fremskridtet er væk | Det er med vilje. Af hensyn til GDPR gemmes intet, når siden genindlæses eller lukkes. |
-| Udvidelsen forsvandt i Firefox | Midlertidige tilføjelser forsvinder, når Firefox lukkes. Brug den signerede `.xpi`, hvis der er en. |
+| Firefox siger, at tilføjelsen ikke kan bekræftes | Brug `navnleg-firefox.xpi` fra Releases, ikke zip-filen. Kun den signerede `.xpi` kan installeres permanent. |
 
 ---
 
@@ -173,7 +171,9 @@ Udvidelsen virker også på tablet og mobil, hvis browseren understøtter udvide
 ```
 navnleg-extension/   Selve udvidelsen (Manifest V3): manifest.json, content.js, style.css, icons/
 build.sh             Bygger dist/navnleg-chrome.zip og dist/navnleg-firefox.zip
-                     (Firefox-udgaven får browser_specific_settings i manifestet)
+                     (Firefox-udgaven får browser_specific_settings i manifestet).
+                     Firefox-zip'en signeres på addons.mozilla.org ("On your own")
+                     og lægges på Releases som navnleg-firefox.xpi.
 test/                End-to-end-test i rigtige browsere
 docs/                Billeder til denne vejledning
 ```
