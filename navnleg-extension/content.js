@@ -116,13 +116,15 @@
   }
 
   // Returnerer "rigtigt", "næsten" eller "forkert"
+  // Det første fornavn er nok ("Hans Jørgen" -> "hans"). Hele fornavnet og hele navnet
+  // godkendes også.
   function checkTyped(input, s) {
     const x = norm(input);
     if (!x) return "forkert";
-    const full = norm(s.navn), first = norm(s.fornavn);
-    if (x === full || x === first) return "rigtigt";
-    const tol = first.length > 4 ? 1 : 0;
-    if (lev(x, first) <= tol || lev(x, full) <= tol + 1) return "næsten";
+    const full = norm(s.navn), first = norm(s.fornavn), firstWord = first.split(" ")[0];
+    if (x === firstWord || x === first || x === full) return "rigtigt";
+    const tol = (w) => (w.length > 4 ? 1 : 0);
+    if (lev(x, firstWord) <= tol(firstWord) || lev(x, first) <= tol(first) || lev(x, full) <= tol(first) + 1) return "næsten";
     return "forkert";
   }
 
@@ -315,7 +317,7 @@
           row("A–Å", "gå hele klasselisten igennem alfabetisk. Til sidst kan du øve dem, du ikke kunne. Slå \"Vis navnet med det samme\" til for en ren indlæringsrunde."),
           row("Flashcards", "se et billede, tænk på navnet, vis det og sig ærligt om du kunne det."),
           row("Vælg navn", "vælg det rigtige navn blandt fire."),
-          row("Skriv navn", "skriv fornavn eller hele navnet. Små stavefejl godkendes."),
+          row("Skriv navn", "skriv elevens fornavn – det første fornavn er nok. Små stavefejl godkendes."),
           row("Find billedet", "find den rigtige elev blandt fire billeder."),
           row("Galleri", "se alle elever og hvor langt du er med hver.")),
         el("h3", {}, "Taster"),
@@ -466,7 +468,7 @@
     type() {
       const s = this.pick();
       let done = false;
-      const input = el("input", { class: "nl-input", type: "text", placeholder: "Skriv fornavn eller fulde navn", autocomplete: "off", spellcheck: "false" });
+      const input = el("input", { class: "nl-input", type: "text", placeholder: "Skriv fornavnet", autocomplete: "off", spellcheck: "false" });
       const result = el("div", { class: "nl-result" });
       const submit = async () => {
         if (done) return this.next();
@@ -484,7 +486,7 @@
       this.handlers = { Enter: submit };
       this.render(el("div", { class: "nl-card" }, photo(s),
         el("form", { class: "nl-form", onsubmit: (e) => { e.preventDefault(); } }, input, giveUp), result),
-        "Tryk Enter for at svare – små stavefejl godkendes");
+        "Tryk Enter for at svare – det første fornavn er nok, og små stavefejl godkendes");
       setTimeout(() => input.focus(), 30);
     }
 

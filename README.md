@@ -33,7 +33,7 @@ Den virker i **Chrome, Edge, Brave, Vivaldi, Opera** og **Firefox**.
 | **A–Å** | Gå hele klasselisten igennem alfabetisk efter fornavn. Til sidst kan du øve dem, du ikke kunne, i en ny runde. Slå "Vis navnet med det samme" til, hvis du bare vil kigge billeder og navne igennem. |
 | **Flashcards** | Du ser et billede, tænker på navnet, viser det og siger ærligt, om du kunne det. |
 | **Vælg navn** | Vælg det rigtige navn blandt fire. |
-| **Skriv navn** | Skriv fornavnet eller hele navnet. Små stavefejl og manglende accenter godkendes. |
+| **Skriv navn** | Skriv elevens fornavn. Det første fornavn er nok: står der "Hans Jørgen", er "Hans" rigtigt. Små stavefejl og manglende accenter godkendes. |
 | **Find billedet** | Du ser et navn og finder den rigtige elev blandt fire billeder. |
 | **Galleri** | Se alle elever og hvor langt du er med hver. |
 

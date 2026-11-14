@@ -254,8 +254,8 @@ export async function runTests(page, browser) {
   r = await typeAnswer(() => "");
   check("Tomt svar → forkert", r.fb?.startsWith("✗"), JSON.stringify(r));
   // stavefejl: find en elev med fornavn > 4 tegn
-  let typoOk = null, shortStrict = null, accentOk = null, midOk = null;
-  for (let i = 0; i < 300 && (typoOk === null || shortStrict === null || accentOk === null || midOk === null); i++) {
+  let typoOk = null, shortStrict = null, accentOk = null, midOk = null, firstOnly = null, secondOnly = null;
+  for (let i = 0; i < 300 && (typoOk === null || shortStrict === null || accentOk === null || midOk === null || firstOnly === null || secondOnly === null); i++) {
     const pid = await page.eval(`document.querySelector('.nl-overlay .nl-photo').getAttribute('src').match(/pictureid=(\\d+)/)[1]`);
     const s = mapping[pid];
     let txt = null, kind = null;
@@ -263,6 +263,8 @@ export async function runTests(page, browser) {
     else if (shortStrict === null && s.fornavn.length <= 4 && /^[A-Za-z]+$/.test(s.fornavn)) { txt = s.fornavn.slice(0, -1) + "x"; kind = "short"; }
     else if (accentOk === null && s.fornavn === "Zoë") { txt = "zoe"; kind = "accent"; }
     else if (midOk === null && s.fornavn === "Anna Marie") { txt = "anna marie"; kind = "mid"; }
+    else if (firstOnly === null && s.fornavn === "Anna Marie") { txt = "Anna"; kind = "first"; }
+    else if (secondOnly === null && s.fornavn === "Anna Marie") { txt = "marie"; kind = "second"; }
     await page.waitFor("document.activeElement?.classList.contains('nl-input')");
     if (txt) await page.insertText(txt);
     await page.key("Enter");
@@ -271,12 +273,16 @@ export async function runTests(page, browser) {
     if (kind === "short") shortStrict = { ok: fb.startsWith("✗"), fb };
     if (kind === "accent") accentOk = { ok: fb.startsWith("✓"), fb };
     if (kind === "mid") midOk = { ok: fb.startsWith("✓"), fb };
+    if (kind === "first") firstOnly = { ok: fb.startsWith("✓ Rigtigt!") && !fb.includes("stavet:"), fb };
+    if (kind === "second") secondOnly = { ok: fb.startsWith("✗"), fb };
     await page.key("Enter");
   }
   check("Én stavefejl i langt fornavn godkendes med '(stavet: …)'", typoOk?.ok, JSON.stringify(typoOk));
   check("Stavefejl i kort fornavn (≤4 tegn) godkendes ikke", shortStrict?.ok, JSON.stringify(shortStrict));
   check("'zoe' godkendes for Zoë (accenter ignoreres)", accentOk?.ok, JSON.stringify(accentOk));
   check("Dobbelt fornavn 'anna marie' godkendes", midOk?.ok, JSON.stringify(midOk));
+  check("Kun første fornavn 'Anna' er nok for Anna Marie", firstOnly?.ok, JSON.stringify(firstOnly));
+  check("Kun andet fornavn 'marie' godkendes ikke", secondOnly?.ok, JSON.stringify(secondOnly));
   await page.waitFor("document.activeElement?.classList.contains('nl-input')");
   await page.insertText("12 3");
   check("Tal og mellemrum i feltet trigger ikke genveje", (await page.eval("document.querySelector('.nl-input').value")) === "12 3" && !(await page.eval("!!document.querySelector('.nl-feedback')")));
